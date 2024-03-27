@@ -58,9 +58,11 @@ spec:
           ports:
             - containerPort: {{ .Values.server.httpPort }}
           livenessProbe:
-            httpGet:
-              path: /ping
-              port: {{ .Values.server.httpPort }}
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - curl http://localhost:{{ .Values.server.httpPort }}/ping
             # Redash can take a while to come up initially, so we delay checks.
             initialDelaySeconds: 90
             timeoutSeconds: 1
@@ -68,9 +70,11 @@ spec:
             successThreshold: 1
             failureThreshold: 10
           readinessProbe:
-            httpGet:
-              path: /ping
-              port: {{ .Values.server.httpPort }}
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - curl http://localhost:{{ .Values.server.httpPort }}/ping
             initialDelaySeconds: 10
             timeoutSeconds: 1
             periodSeconds: 10

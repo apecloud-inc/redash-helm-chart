@@ -10,6 +10,9 @@ metadata:
   {{- end }}
 spec:
   type: {{ .Values.service.type }}
+  ipFamilyPolicy: SingleStack
+  ipFamilies:
+    - IPv4
   {{- if .Values.service.externalTrafficPolicy }}
   externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
   {{- end }}
